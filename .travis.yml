@@ -1,14 +1,30 @@
+env:
+  global:
+    # COVERITY_SCAN_TOKEN
+    # ** specific to your project **
+   - secure: "ntmyhcWmKqZ+4Iac8kq0m7VINVtKSdE/V2zJTU2gfM4v7nFXA05A3IFjm8WctONOYhTqAWM0BG6qfI5iuq3sTSGuI6s+tsk9ogHLn06BxjR3G6aTWWXM+CBx49k8jUVehLCFS01Fw+SbukxCR1Wjim98Cm1cQ9fXRej+zdLoLBabXT50D1oUngRyJk9fSYi+Yr8uxV5ord7b79ZkF8Sf12sy0J6NL0cI37zh/+WK47HtTyYX5ZSEfxVohHGoLoMtywgqwNtEdjCyAT1ziDz+jWkt6N/wkRSah8cqoLoCIXhkmakOQRK9bXj10lr66skKK1txSNs6JbCL9qzWC6BC0GatIHhE6yA+y0q2FlMkgSGATKEh6mu2lUWcvUAlGMHqLi+0pOvOIsIezIAlO9PoO5TY+3vzQ0VMZKovshIuf5B7YQZIJ/Z0DelUVLjwy0eDSI2w6cylb9se37j3YvzIeMY1jKqCv56UZdSctlSqLAnPw28YZQb+DhhlK6Kl5Kzqq4idh1i7w1tXWMvr09oK37il07q5iCKl2WsZGsBomwoaX7Pf8Nf6lClxgmBM2OR7GhA2Be6dqEenIilxetemF2UuAc0reZrXysQlv+S1kUojNLa9yCJbQoOfFZ+Iop6h5/G7MbHEfZm29q8EcU/mJxSJV1t8hOAH1f4WFiYirN4="    
+
+
 language: cpp
 os: linux
-dist: bionic
+compiler: gcc
+dist: Bionic
+sudo: required
 
+addons:
+  coverity_scan:
+    project:
+      name: mm-project/qttools
+    build_command_prepend: "sudo apt-get install clang-6.0 qt5-default; qmake; cd src/qdoc; qmake "
+    build_command: "make -j4"
+    branch_pattern: coverity
+    notification_email: baghi.blbul@gmail.com
+    
 compiler:
   - g++
   
 script:
-  - mkdir -p cmake-3.17 && wget -qO- "https://cmake.org/files/v3.17/cmake-3.17.0-Linux-x86_64.tar.gz" | tar --strip-components=1 -xz -C cmake-3.17
-  - export PATH=`pwd`/cmake-3.17/bin:$PATH
-  - sudo apt-get install freeglut3-dev  mesa-utils  mesa-common-dev libegl1-mesa-dev ninja-build clang-6.0 qt5-default
+  - sudo apt-get install clang-6.0 qt5-default
   - qmake
   - cd src/qdoc
   - qmake
