@@ -1,0 +1,14 @@
+language: cpp
+os: linux
+dist: bionic
+
+compiler:
+  - g++
+  
+script:
+  - mkdir -p cmake-3.17 && wget -qO- "https://cmake.org/files/v3.17/cmake-3.17.0-Linux-x86_64.tar.gz" | tar --strip-components=1 -xz -C cmake-3.17
+  - export PATH=`pwd`/cmake-3.17/bin:$PATH
+  - sudo apt-get install freeglut3-dev  mesa-utils  mesa-common-dev libegl1-mesa-dev ninja-build qt5-default
+  - cd src/qdoc
+  - qmake
+  - make -j4
