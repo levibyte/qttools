@@ -12,3 +12,4 @@ script:
   - cd src/qdoc
   - qmake
   - make -j4
+  
